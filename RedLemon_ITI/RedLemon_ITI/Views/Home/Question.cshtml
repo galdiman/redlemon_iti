@@ -1,0 +1,172 @@
+﻿@model int?
+@{
+    ViewBag.Title = "Innovation Testing Instrument";
+}
+
+<style type="text/css" media="screen">
+    .iti_footer{
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+
+    #iti_containerBody {
+        position:relative;
+        width: 100%;
+        /*max-height: 350px;
+        min-height: 350px;*/
+        overflow-y:hidden;
+    }
+
+    #divContainerLayout{
+        max-height: 350px;
+        min-height: 350px;
+        overflow-y:auto;
+    }
+
+    #divBottom{}
+
+    #divTop{
+        text-align:center;
+        width:100%;
+        display:block;
+        margin-bottom:20px;
+    }
+
+    #divLeft{
+        float:left;
+        height:100%;
+        width:50%;
+    }
+
+    #divLeftImgs{
+        float:left;
+        height:100%;
+        width:40%;
+    }
+
+    #divRightImgs{
+        float:right;
+        width:59%;
+        margin-left:1%;
+    }
+
+    #divRight{
+        float:right;
+        width:49%;
+        margin-left:1%;
+        max-height: 350px;
+        overflow-y:scroll;
+    }
+
+    .fa-equal {
+        font-family: Arial;
+        font-weight: bold;
+    }
+
+        .fa-equal:before {
+            content: "=";
+            font-size: 2em;
+        }
+
+    .floatingLeft{
+        float:left;
+    }
+
+    .cols2 {
+        -webkit-column-count: 2;
+        -webkit-column-gap: 5px;
+        -moz-column-count: 2;
+        -moz-column-gap: 5px;
+        column-count: 2;
+        column-gap: 5px;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-10 text-center">
+        <h2><span id="activityTitle"></span></h2>
+    </div>
+    <div class="col-sm-2 text-right">
+        <div class="holder-countdown" style="margin-top:5px;"></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12" id="infoActivity">
+        <p><span style="font-weight:bold">Purpose: </span><span id="activityPurpose"></span></p>
+        <p><span style="font-weight:bold">Instructions: </span><span id="activityInstructions"></span></p>
+    </div>
+</div>
+
+<div class="row" style="max-height:450px;">
+    <div class="col-sm-12">
+        <form id="frmAnwers">
+            <div id="iti_containerBody"></div>
+        </form>
+    </div>
+</div>
+
+<div class="row iti_footer">
+    <div class="col-sm-1 col-lg-offset-5 text-center" style="">
+        <a href="#" id="btnNext" class="btn btn-primary">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-right"></span></a>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/functions_controls.js")"></script>
+    <script type="text/javascript">
+        var activities = JSON.parse(localStorage.getItem('activities'));
+        var idx = @Model;
+
+        $(document).ready(function () {
+            $('#btnNext').click(RenderNextActivity);
+            $('#btnNext').trigger('click');
+        });
+
+        function RenderNextActivity(evt){
+            evt.preventDefault();
+
+            if(idx < activities.length){
+                var activity = activities[idx];
+
+                $('#activityTitle').text(activity.Name);
+                $('#activityPurpose').text(activity.Purpose);
+                $('#activityInstructions').text(activity.Instructions);
+                $('#timeToResolve').val(activity.TimeToResolve);
+
+                var info = $('#infoActivity');
+                $('#pPrompt').remove();
+                if(activity.HasPrompt){
+                    info.append($('<p id="pPrompt"><span style="font-weight:bold">Prompt: </span><span id="activityPrompt">'+activity.Prompt+'</span></p>'));
+                }
+
+                var mainContainer = $('#iti_containerBody');
+                mainContainer.empty();
+                RenderContorl(mainContainer, activity.ActivityExtras);
+                mainContainer.find('input').first().focus();
+                idx = idx+1;
+                SetTimeToResolve(activity);
+            }
+            else{
+                alert('GoToSave');
+            }
+
+        }
+
+        function AddRow(evt){
+            alert('Hola');
+        }
+
+        function SetTimeToResolve(activity){
+            var countDown = $(".holder-countdown").empty();
+            countDown.append($('<div id="timeToResolve" name="timeToResolve"></div>'));
+            var secs = '+'+activity.TimeToResolve+'s';
+            $('#timeToResolve').countdown({until: secs, format: 'MS', onExpiry: NextQuestion, expiryText: '<div class="over">It\'s all over</div>'});
+            
+        }
+
+        function NextQuestion(evt){
+            $('#btnNext').trigger('click');
+        }
+    </script>
+}

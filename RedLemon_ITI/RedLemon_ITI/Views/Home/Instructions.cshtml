@@ -1,0 +1,46 @@
+﻿@model ICollection<RedLemon_ITI.Models.Activity>
+@{
+    ViewBag.Title = "Instructions";
+}
+
+<style>
+#capa {
+  padding: 30px;
+  margin: 10px;
+  }
+  
+#capa img {
+  float: right;
+  margin: 0 10px 10px 0;
+  }
+</style>
+
+    <div class="row" style="margin-top:5px;">
+        <div class="col-sm-12">
+            <div id="capa">
+                The Innovation Testing Instrument (ITI) is an innovative assesment designed 
+                    to help assess your innovative thinking abilities based on the USERS innovation framework (see fig. 1).
+                    After participating, you will receive an "Innovation Quotient" -- a quantitative indicator of your innovative abilities on 
+                    a scale of __ to __.
+                <img src="@Url.Content("~/Content/images/user_fw.png")" alt="USER FrameWork" width="300" height="200"/>
+            </div>
+        </div>
+    </div>
+    
+        <div class="row" style="margin-bottom:5px;margin-top:5px;">
+            <div class="col-sm-12 text-center">
+                <a href="@Url.Action("Question","Home", new { id = 0 })" class="btn btn-primary">Next&nbsp;&nbsp;<span class="glyphicon glyphicon-arrow-right"></span></a>
+            </div>
+        </div>
+
+@section scripts{
+    <script type="text/javascript">
+        var activities = @Html.Raw(Json.Encode(Model));
+
+        $(document).ready(function () {
+            localStorage.setItem('activities',JSON.stringify(activities));
+        });
+
+    </script>
+    }
+

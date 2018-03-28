@@ -1,0 +1,56 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedLemon - ITI</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#2980A7; border:none; color:white;">
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="#"><img src="/Content/Images/logo.png" height="40" /></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" style="color:white;font-size:1.5em;font-family:Calibri; font-weight:bold;">BYU</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <img class="center-block" src="/Content/Images/logo.png" />
+            </div>
+        </div>
+        <div id="header" style="text-align:center;">
+            <h1>Innovation Testing Instrument</h1>
+        </div>
+        <div class="row" style="margin-top:120px;">
+            <div class="col-sm-12 text-center">
+                <a href="@Url.Action("instructions","Home")" class="btn btn-primary">Start</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <footer>
+        <p>&copy; 2018 - RedLemon</p>
+    </footer>
+
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/respond.js"></script>
+
+</body>
+</html>
